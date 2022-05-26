@@ -1,13 +1,12 @@
-﻿namespace tabuleiro
+namespace tabuleiro
 {
-    enum Cor {
-
-        Branca,
-        Preta,
-        Amarela,
-        Azul,
-        Vermelha,
-        Verde,
-        Laranja
-    }
+  public enum Cor
+  {
+    Branca,
+    Preta,
+    Amarela,
+    Azul,
+    Vermelha,
+    Laranja
+  }
 }

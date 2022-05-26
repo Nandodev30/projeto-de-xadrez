@@ -1,77 +1,77 @@
-﻿using tabuleiro;
+using tabuleiro;
 
 namespace xadrez
 {
-    class Torre : Peca
+  public class Torre : Peca
+  {
+    public Torre(Tabuleiro tab, Cor cor) : base(tab, cor) { }
+
+    public override string ToString()
     {
-        public Torre(Tabuleiro tab, Cor cor) : base(tab, cor)
+      return "T";
+    }
+
+    private bool PodeMover(Posicao pos)
+    {
+      Peca p = Tab.Parts(pos);
+      return p == null || p.Cor != Cor;
+    }
+
+    public override bool[,] MovimentosPossiveis()
+    {
+      bool[,] mat = new bool[Tab.Linhas, Tab.Colunas];
+
+      Posicao pos = new Posicao(0, 0);
+
+      //acima
+      pos.DefinirValores(Posicao.Linha - 1, Posicao.Coluna);
+      while (Tab.PosicaoValida(pos) && PodeMover(pos))
+      {
+        mat[pos.Linha, pos.Coluna] = true;
+        if (Tab.Parts(pos) != null && Tab.Parts(pos).Cor != Cor)
         {
-
+          break;
         }
+        pos.Linha = pos.Linha - 1;
+      }
 
-        public override string ToString()
+      //abaixo
+      pos.DefinirValores(Posicao.Linha + 1, Posicao.Coluna);
+      while (Tab.PosicaoValida(pos) && PodeMover(pos))
+      {
+        mat[pos.Linha, pos.Coluna] = true;
+        if (Tab.Parts(pos) != null && Tab.Parts(pos).Cor != Cor)
         {
-            return "T";
+          break;
         }
+        pos.Linha = pos.Linha + 1;
+      }
 
-        private bool podeMover(Posicao pos)
+      //direita
+      pos.DefinirValores(Posicao.Linha, Posicao.Coluna + 1);
+      while (Tab.PosicaoValida(pos) && PodeMover(pos))
+      {
+        mat[pos.Linha, pos.Coluna] = true;
+        if (Tab.Parts(pos) != null && Tab.Parts(pos).Cor != Cor)
         {
-            Peca p = tab.peca(pos);
-            return p == null || p.cor != cor;
+          break;
         }
+        pos.Coluna = pos.Coluna + 1;
+      }
 
-        public override bool[,] movimentosPossiveis()
+      //esquerda
+      pos.DefinirValores(Posicao.Linha, Posicao.Coluna - 1);
+      while (Tab.PosicaoValida(pos) && PodeMover(pos))
+      {
+        mat[pos.Linha, pos.Coluna] = true;
+        if (Tab.Parts(pos) != null && Tab.Parts(pos).Cor != Cor)
         {
-            bool[,] mat = new bool[tab.linhas, tab.colunas];
-
-            Posicao pos = new Posicao(0, 0);
-
-            //acima
-            pos.definirValores(posicao.linha - 1, posicao.coluna);
-            while (tab.posicaoValida(pos) && podeMover(pos))
-            {
-                mat[pos.linha, pos.coluna] = true;
-                if (tab.peca(pos) != null && tab.peca(pos).cor != cor)
-                {
-                    break;
-                }
-                pos.linha = pos.linha - 1;
-            }
-            // abaixo
-            pos.definirValores(posicao.linha + 1, posicao.coluna);
-            while (tab.posicaoValida(pos) && podeMover(pos))
-            {
-                mat[pos.linha, pos.coluna] = true;
-                if (tab.peca(pos) != null && tab.peca(pos).cor != cor)
-                {
-                    break;
-                }
-                pos.linha = pos.linha + 1;
-            }
-            // direita
-            pos.definirValores(posicao.linha, posicao.coluna + 1);
-            while (tab.posicaoValida(pos) && podeMover(pos))
-            {
-                mat[pos.linha, pos.coluna] = true;
-                if (tab.peca(pos) != null && tab.peca(pos).cor != cor)
-                {
-                    break;
-                }
-                pos.coluna = pos.coluna + 1;
-            }
-            // esquerda
-            pos.definirValores(posicao.linha, posicao.coluna - 1);
-            while (tab.posicaoValida(pos) && podeMover(pos))
-            {
-                mat[pos.linha, pos.coluna] = true;
-                if (tab.peca(pos) != null && tab.peca(pos).cor != cor)
-                {
-                    break;
-                }
-                pos.coluna = pos.coluna - 1;
-            }
-
-            return mat;
+          break;
         }
-     }
+        pos.Coluna = pos.Coluna - 1;
+      }
+      
+      return mat;
+    }
+  }
 }
